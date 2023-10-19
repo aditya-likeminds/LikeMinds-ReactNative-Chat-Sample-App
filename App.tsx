@@ -42,7 +42,6 @@ function App(): JSX.Element {
           RootNavigation.navigate(routes.route, routes.params);
         }, 1000);
       }
-      
     }
     bootstrap();
   }, []);

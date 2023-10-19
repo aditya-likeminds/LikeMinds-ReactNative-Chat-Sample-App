@@ -17,8 +17,8 @@ import {useQuery} from '@realm/react';
 import {myClient} from '../../..';
 import {ChatroomChatRequestState} from '../../enums';
 import {ChatroomType} from '../../enums';
-import { UserSchemaResponse } from '../../db/models';
-import { USER_SCHEMA_RO } from '../../constants/Strings';
+import {UserSchemaResponse} from '../../db/models';
+import {USER_SCHEMA_RO} from '../../constants/Strings';
 
 interface Messages {
   item: any;
@@ -77,11 +77,11 @@ const Messages = ({
     for (let i = 0; i < defaultReactionArrLen; i++) {
       if (defaultReactionArrLen > 0) {
         let isIncuded = tempArr.some(
-          (val: any) => val['reaction'] === item?.reactions[i]?.reaction,
+          (val: any) => val.reaction === item?.reactions[i]?.reaction,
         );
         if (isIncuded) {
           let index = tempArr.findIndex(
-            (val: any) => val['reaction'] === item?.reactions[i]?.reaction,
+            (val: any) => val.reaction === item?.reactions[i]?.reaction,
           );
           tempArr[index].memberArr = [
             ...tempArr[index]?.memberArr,
@@ -192,7 +192,7 @@ const Messages = ({
   return (
     <View style={styles.messageParent}>
       <View>
-        {!!item?.deletedBy ? (
+        {item?.deletedBy ? (
           chatroomType !== ChatroomType.DMCHATROOM ? (
             currentUserUuid === conversationDeletor ? (
               <View
@@ -257,7 +257,7 @@ const Messages = ({
               </Text>
             </View>
           )
-        ) : !!item?.replyConversationObject ? (
+        ) : item?.replyConversationObject ? (
           <ReplyConversations
             isIncluded={isIncluded}
             item={item}
@@ -273,7 +273,7 @@ const Messages = ({
             navigation={navigation}
             handleFileUpload={handleFileUpload}
           />
-        ) : !!!item?.replyConversationObject && item?.attachmentCount > 0 ? (
+        ) : !item?.replyConversationObject && item?.attachmentCount > 0 ? (
           <AttachmentConversations
             navigation={navigation}
             isIncluded={isIncluded}
@@ -313,16 +313,16 @@ const Messages = ({
             {isItemIncludedInStateArr ? (
               <View>
                 {/* state 19 is for the reject DM state message */}
-                {/* Logic is when to show TAP TO UNDO => 
-                      Item's state == 19 && 
-                      conversation array's first element's ID == 19 && 
-                      conversations[0]?.id == item?.id && 
+                {/* Logic is when to show TAP TO UNDO =>
+                      Item's state == 19 &&
+                      conversation array's first element's ID == 19 &&
+                      conversations[0]?.id == item?.id &&
                       chatRequestBy user should be same as user (when we reject DM chat request by changes to the person who rejected the request)
                 */}
                 {item?.state === 19 &&
                 conversations[0]?.state === 19 &&
                 conversations[0]?.id === item?.id &&
-                (!!chatroomWithUser
+                (chatroomWithUser
                   ? chatroomWithUser?.id == userIdStringified
                   : null) ? (
                   <Pressable
@@ -396,10 +396,10 @@ const Messages = ({
                       ? {backgroundColor: STYLES.$COLORS.SELECTED_BLUE}
                       : null,
                   ]}>
-                  {!!(item?.member?.id == userIdStringified) ? null : (
+                  {item?.member?.id == userIdStringified ? null : (
                     <Text style={styles.messageInfo} numberOfLines={1}>
                       {item?.member?.name}
-                      {!!item?.member?.customTitle ? (
+                      {item?.member?.customTitle ? (
                         <Text
                           style={
                             styles.messageCustomTitle
@@ -410,7 +410,7 @@ const Messages = ({
                   <Text>{decode(item?.answer, true)}</Text>
                   <View style={styles.alignTime}>
                     {item?.isEdited ? (
-                      <Text style={styles.messageDate}>{`Edited • `}</Text>
+                      <Text style={styles.messageDate}>{'Edited • '}</Text>
                     ) : null}
                     <Text style={styles.messageDate}>{item?.createdAt}</Text>
                   </View>

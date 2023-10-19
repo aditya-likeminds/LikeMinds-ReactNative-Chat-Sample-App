@@ -93,7 +93,7 @@ const ExploreFeed = ({navigation}: Props) => {
   useEffect(() => {
     if (isPinned) {
       let pinnedChats = exploreChatrooms.filter((item: any) =>
-        !!item?.isPinned ? item : null,
+        item?.isPinned ? item : null,
       );
       setChats(pinnedChats);
     } else {
@@ -104,7 +104,7 @@ const ExploreFeed = ({navigation}: Props) => {
   const loadData = async (newPage: number) => {
     setIsLoading(true);
     const res = await updateData(newPage);
-    if (!!res) {
+    if (res) {
       setIsLoading(false);
     }
   };
@@ -139,9 +139,9 @@ const ExploreFeed = ({navigation}: Props) => {
               setFilterState(val);
             }}
             setIsPinned={val => {
-              if (!!val) {
+              if (val) {
                 let pinnedChats = chats.filter((item: any) =>
-                  !!item?.isPinned ? item : null,
+                  item?.isPinned ? item : null,
                 );
                 setChats(pinnedChats);
                 setIsPinned(val);

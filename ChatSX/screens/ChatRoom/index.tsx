@@ -246,12 +246,12 @@ const ChatRoom = ({navigation, route}: ChatRoom) => {
     /* `{? = then}`, `{: = else}`  */
   }
   {
-    /* 
-      if DM ? 
-        if userID !=== chatroomWithUserID ? 
-          chatroomWithUserName 
+    /*
+      if DM ?
+        if userID !=== chatroomWithUserID ?
+          chatroomWithUserName
         : memberName
-      : chatroomHeaderName  
+      : chatroomHeaderName
   */
   }
 
@@ -266,12 +266,12 @@ const ChatRoom = ({navigation, route}: ChatRoom) => {
     /* `{? = then}`, `{: = else}`  */
   }
   {
-    /* 
-          if DM ? 
-            if userID !=== chatroomWithUserID ? 
-              chatroomWithUserImageURL 
+    /*
+          if DM ?
+            if userID !=== chatroomWithUserID ?
+              chatroomWithUserImageURL
             : memberImageURL
-          : null  
+          : null
       */
   }
   let chatroomProfile =
@@ -328,7 +328,7 @@ const ChatRoom = ({navigation, route}: ChatRoom) => {
                 <View style={styles.profile}>
                   <Image
                     source={
-                      !!chatroomProfile
+                      chatroomProfile
                         ? {uri: chatroomProfile}
                         : require('../../assets/images/default_pic.png')
                     }
@@ -369,7 +369,7 @@ const ChatRoom = ({navigation, route}: ChatRoom) => {
       headerRight: () =>
         filteredChatroomActions?.length > 0 && (
           <View style={styles.headerRight}>
-            {!!chatroomDetails ? (
+            {chatroomDetails ? (
               <TouchableOpacity
                 onPress={() => {
                   setModalVisible(!modalVisible);
@@ -447,7 +447,7 @@ const ChatRoom = ({navigation, route}: ChatRoom) => {
             showCopyIcon = false;
           }
 
-          if (!!!selectedMessages[i]?.deletedBy && showCopyIcon) {
+          if (!selectedMessages[i]?.deletedBy && showCopyIcon) {
             isCopy = true;
           } else if (!showCopyIcon) {
             isCopy = false;
@@ -455,7 +455,7 @@ const ChatRoom = ({navigation, route}: ChatRoom) => {
 
           if (
             selectedMessages[i]?.member?.id == user?.id &&
-            !!!selectedMessages[i]?.deletedBy
+            !selectedMessages[i]?.deletedBy
           ) {
             userCanDeleteParticularMessageArr = [
               ...userCanDeleteParticularMessageArr,
@@ -481,7 +481,7 @@ const ChatRoom = ({navigation, route}: ChatRoom) => {
           if (
             user?.state === communityManagerState &&
             userCanDeleteParticularMessageArr.length === 1 &&
-            !!!isFirstMessageDeleted
+            !isFirstMessageDeleted
           ) {
             isDelete = true;
           } else {
@@ -493,7 +493,7 @@ const ChatRoom = ({navigation, route}: ChatRoom) => {
         return (
           <View style={styles.selectedHeadingContainer}>
             {len === 1 &&
-              !!!isFirstMessageDeleted &&
+              !isFirstMessageDeleted &&
               memberCanMessage &&
               chatroomFollowStatus && (
                 <TouchableOpacity
@@ -518,7 +518,7 @@ const ChatRoom = ({navigation, route}: ChatRoom) => {
                 </TouchableOpacity>
               )}
 
-            {len === 1 && !!!isFirstMessageDeleted && isCopy ? (
+            {len === 1 && !isFirstMessageDeleted && isCopy ? (
               <TouchableOpacity
                 onPress={() => {
                   const output = copySelectedMessages(selectedMessages);
@@ -604,7 +604,7 @@ const ChatRoom = ({navigation, route}: ChatRoom) => {
                 />
               </TouchableOpacity>
             )}
-            {len === 1 && !!!isFirstMessageDeleted && (
+            {len === 1 && !isFirstMessageDeleted && (
               <TouchableOpacity
                 onPress={() => {
                   setReportModalVisible(true);
@@ -903,14 +903,14 @@ const ChatRoom = ({navigation, route}: ChatRoom) => {
           uuid: chatroomWithUser?.sdkClientInfo?.uuid,
         });
         let response = apiRes?.data;
-        if (!!response?.cta) {
+        if (response?.cta) {
           setShowDM(response?.showDm);
         }
       } else if (
         chatroomType == ChatroomType.OPENCHATROOM ||
         chatroomType == ChatroomType.ANNOUNCEMENTROOM
       ) {
-        if (!!community?.id) {
+        if (community?.id) {
           let payload = {
             page: 1,
           };
@@ -918,7 +918,7 @@ const ChatRoom = ({navigation, route}: ChatRoom) => {
       }
     }
 
-    if (!!chatroomDBDetails) {
+    if (chatroomDBDetails) {
       callApi();
     }
   }, [chatroomDBDetails]);
@@ -936,7 +936,7 @@ const ChatRoom = ({navigation, route}: ChatRoom) => {
   useEffect(() => {
     if (selectedMessages.length === 0) {
       setInitialHeader();
-    } else if (!!isLongPress) {
+    } else if (isLongPress) {
       setSelectedHeader();
     }
   }, [isLongPress, selectedMessages]);
@@ -984,7 +984,9 @@ const ChatRoom = ({navigation, route}: ChatRoom) => {
         let firebaseData = snapshot.val();
         let conversationID = firebaseData?.collabcard?.answer_id;
         if (conversationID) {
-          if (!user?.sdkClientInfo?.community) return;
+          if (!user?.sdkClientInfo?.community) {
+            return;
+          }
           let maxTimeStamp = Math.floor(Date.now() * 1000);
           await firebaseConversationSyncAPI(
             INITIAL_SYNC_PAGE,
@@ -1057,7 +1059,7 @@ const ChatRoom = ({navigation, route}: ChatRoom) => {
       type: GET_CONVERSATIONS_SUCCESS,
       body: {conversations: [...conversations, ...newConversations]},
     });
-    if (!!newConversations) {
+    if (newConversations) {
       setIsLoading(false);
     }
   };
@@ -1996,7 +1998,7 @@ const ChatRoom = ({navigation, route}: ChatRoom) => {
       });
     } else {
       let clickedChatroomID = res?.chatroomId;
-      if (!!clickedChatroomID) {
+      if (clickedChatroomID) {
         navigation.pop(1);
         navigation.push(CHATROOM, {
           chatroomID: clickedChatroomID,
@@ -2017,7 +2019,7 @@ const ChatRoom = ({navigation, route}: ChatRoom) => {
             });
           } else {
             let createdChatroomID = response?.chatroom?.id;
-            if (!!createdChatroomID) {
+            if (createdChatroomID) {
               navigation.pop(1);
               navigation.push(CHATROOM, {
                 chatroomID: createdChatroomID,
@@ -2070,7 +2072,7 @@ const ChatRoom = ({navigation, route}: ChatRoom) => {
       setShouldLoadMoreChatEnd(false);
     }
 
-    if (!!res) {
+    if (res) {
       setIsLoading(false);
     }
   };
@@ -2105,7 +2107,7 @@ const ChatRoom = ({navigation, route}: ChatRoom) => {
   // This is for scrolling down mainly ie whenever response changes this useEffect will be triggered and it'll calculate the index of the last message before prepending of new data and scroll to that index
   useEffect(() => {
     setTimeout(() => {
-      if (!!response) {
+      if (response) {
         const len = response?.conversations?.length;
         if (len != 0 && len != undefined) {
           let index = len;
@@ -2418,7 +2420,7 @@ const ChatRoom = ({navigation, route}: ChatRoom) => {
           <View>
             {!(Object.keys(chatroomDBDetails).length === 0) &&
             previousRoute?.name === EXPLORE_FEED
-              ? !!!chatroomFollowStatus && (
+              ? !chatroomFollowStatus && (
                   <TouchableOpacity
                     onPress={() => {
                       joinSecretChatroom();
@@ -2541,7 +2543,7 @@ const ChatRoom = ({navigation, route}: ChatRoom) => {
           memberRights.length > 0 ? (
           <View>
             {chatRequestState === 0 &&
-            (!!chatroomDBDetails?.chatRequestedBy
+            (chatroomDBDetails?.chatRequestedBy
               ? chatroomDBDetails?.chatRequestedBy?.id !== user?.id?.toString()
               : null) ? (
               <View style={styles.dmRequestView}>

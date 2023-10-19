@@ -375,17 +375,17 @@ const PollConversationView = ({
     switch (item?.multipleSelectState) {
       case POLL_MULTIPLE_STATE_EXACTLY: {
         let string = `Select exactly ${multipleSelectNo} options.`;
-        return val ? string : `*` + string;
+        return val ? string : '*' + string;
       }
 
       case POLL_MULTIPLE_STATE_MAX: {
         let string = `Select at most ${multipleSelectNo} options.`;
-        return val ? string : `*` + string;
+        return val ? string : '*' + string;
       }
 
       case POLL_MULTIPLE_STATE_LEAST: {
         let string = `Select at least ${multipleSelectNo} options.`;
-        return val ? string : `*` + string;
+        return val ? string : '*' + string;
       }
 
       default: {

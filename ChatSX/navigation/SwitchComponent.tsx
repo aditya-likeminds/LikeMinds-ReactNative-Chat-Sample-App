@@ -89,7 +89,7 @@ const SwitchComponent = () => {
       let routes = getRoute(detail?.notification?.data?.route);
 
       if (type === EventType.PRESS) {
-        if (!!navigation) {
+        if (navigation) {
           if ((currentRoute?.name as any) === routes?.route) {
             if (
               JSON.stringify(routes?.params) !==
@@ -111,7 +111,6 @@ const SwitchComponent = () => {
                   routes?.params as never,
                 );
               }, 1000);
-              
             }
           } else {
             navigation.navigate(

@@ -93,7 +93,7 @@ const ExploreFeedItem: React.FC<Props> = ({
       <View>
         <Image
           source={
-            !!avatar
+            avatar
               ? {uri: avatar}
               : require('../../assets/images/default_pic.png')
           }

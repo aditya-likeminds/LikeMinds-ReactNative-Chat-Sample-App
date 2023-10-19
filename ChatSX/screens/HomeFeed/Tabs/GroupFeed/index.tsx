@@ -103,7 +103,9 @@ const GroupFeed = ({navigation}: Props) => {
 
   useEffect(() => {
     getAppConfig();
-    if (!user?.sdkClientInfo?.community) return;
+    if (!user?.sdkClientInfo?.community) {
+      return;
+    }
     paginatedSyncAPI(INITIAL_SYNC_PAGE, user, false);
     setShimmerIsLoading(false);
     setTimeout(() => {
@@ -115,7 +117,9 @@ const GroupFeed = ({navigation}: Props) => {
     const query = ref(db, `/community/${community?.id}`);
     return onValue(query, snapshot => {
       if (snapshot.exists()) {
-        if (!user?.sdkClientInfo?.community) return;
+        if (!user?.sdkClientInfo?.community) {
+          return;
+        }
         if (isFocused) {
           paginatedSyncAPI(INITIAL_SYNC_PAGE, user, false);
           setShimmerIsLoading(false);
@@ -132,7 +136,7 @@ const GroupFeed = ({navigation}: Props) => {
       getInvites({channelType: 1, page: 1, pageSize: 10}, false) as any,
     );
 
-    if (!!invitesRes?.userInvites) {
+    if (invitesRes?.userInvites) {
       if (invitesRes?.userInvites?.length < 10) {
         let payload = {
           page: 1,
@@ -157,7 +161,7 @@ const GroupFeed = ({navigation}: Props) => {
       const isPermissionEnabled = await requestUserPermission();
       if (isPermissionEnabled) {
         let fcmToken = await fetchFCMToken();
-        if (!!fcmToken) {
+        if (fcmToken) {
           setFCMToken(fcmToken);
         }
       }
@@ -177,7 +181,7 @@ const GroupFeed = ({navigation}: Props) => {
     setIsLoading(true);
     setTimeout(async () => {
       const res = await updateData(newPage);
-      if (!!res) {
+      if (res) {
         setIsLoading(false);
       }
     }, 1500);

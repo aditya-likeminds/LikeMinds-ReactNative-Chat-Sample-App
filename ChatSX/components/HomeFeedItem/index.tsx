@@ -315,11 +315,13 @@ const HomeFeedItem: React.FC<Props> = ({
     <Pressable
       onPress={() => {
         // TODO - Currently from backend we don't get the secret chatroom data without accepting or rejecting the invitation, so diabling the click for now so user can't go inside an invited secret chatroom without accepting the invitation
-        if (inviteReceiver) return;
+        if (inviteReceiver) {
+          return;
+        }
         setTimeout(() => {
           navigation.navigate(CHATROOM, {
             chatroomID: chatroomID,
-            isInvited: !!inviteReceiver ? true : false,
+            isInvited: inviteReceiver ? true : false,
           });
         }, 300);
       }}
@@ -330,7 +332,7 @@ const HomeFeedItem: React.FC<Props> = ({
       <View>
         <Image
           source={
-            !!avatar
+            avatar
               ? {uri: avatar}
               : require('../../assets/images/default_pic.png')
           }
@@ -357,9 +359,9 @@ const HomeFeedItem: React.FC<Props> = ({
               />
             ) : null}
           </Text>
-          {!!time ? <Text style={styles.time}>{time}</Text> : null}
+          {time ? <Text style={styles.time}>{time}</Text> : null}
         </View>
-        {!!lastConversation && !!!inviteReceiver ? (
+        {!!lastConversation && !inviteReceiver ? (
           <Text
             numberOfLines={1}
             style={[
@@ -371,10 +373,9 @@ const HomeFeedItem: React.FC<Props> = ({
             {deletedBy !== 'null' &&
             deletedBy !== null &&
             deletedBy !== undefined ? (
-              <Text
-                style={
-                  styles.deletedMessage
-                }>{`This message has been deleted`}</Text>
+              <Text style={styles.deletedMessage}>
+                {'This message has been deleted'}
+              </Text>
             ) : (
               <Text
                 style={[
@@ -400,14 +401,14 @@ const HomeFeedItem: React.FC<Props> = ({
               </Text>
             )}
           </Text>
-        ) : !!inviteReceiver ? (
+        ) : inviteReceiver ? (
           <Text
             style={
               styles.lastMessage
-            }>{`${`Member`} invited you to join `}</Text>
+            }>{`${'Member'} invited you to join `}</Text>
         ) : null}
       </View>
-      {!!!lastConversation && !!inviteReceiver ? (
+      {!lastConversation && !!inviteReceiver ? (
         <View style={{display: 'flex', flexDirection: 'row', gap: 10}}>
           <TouchableOpacity
             onPress={() => {
@@ -445,7 +446,7 @@ const HomeFeedItem: React.FC<Props> = ({
           />
         </View>
       ) : null}
-      {!!unreadCount ? (
+      {unreadCount ? (
         unreadCount > 100 ? (
           <View style={styles.unreadCountContainer}>
             <Text style={styles.unreadCount}>99+</Text>

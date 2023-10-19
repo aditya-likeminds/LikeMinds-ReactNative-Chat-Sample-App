@@ -238,7 +238,7 @@ const CreatePollScreen = ({navigation, route}: CreatePoll) => {
 
   // this function fetches postPollConversation API
   async function postPoll() {
-    let expiryTime = !!date ? formatDate(date, time) : null;
+    let expiryTime = date ? formatDate(date, time) : null;
     try {
       if (question?.trim() === '') {
         dispatch({
@@ -322,7 +322,7 @@ const CreatePollScreen = ({navigation, route}: CreatePoll) => {
     mode: mode,
     userCanVoteForArr: userCanVoteForArr,
     showAdvancedOption: showAdvancedOption,
-    formatedDateTime: !!date ? formatDate(date, time) : '',
+    formatedDateTime: date ? formatDate(date, time) : '',
     addOptionsEnabled: addOptionsEnabled,
     anonymousPollEnabled: anonymousPollEnabled,
     liveResultsEnabled: liveResultsEnabled,

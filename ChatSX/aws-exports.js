@@ -2,7 +2,7 @@ const chars =
   'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
 const Base64 = {
   atob: (input = '') => {
-    let str = input.replace(/=+$/, '');
+    let str = input.replace(/[=]+$/, '');
     let output = '';
 
     if (str.length % 4 == 1) {

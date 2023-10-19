@@ -83,13 +83,13 @@ const HomeFeed = ({navigation}: Props) => {
             width: 35,
             height: 35,
             borderRadius: STYLES.$AVATAR.BORDER_RADIUS,
-            backgroundColor: !!user?.imageUrl ? 'white' : 'purple',
+            backgroundColor: user?.imageUrl ? 'white' : 'purple',
             justifyContent: 'center',
             alignItems: 'center',
             padding: 5,
             paddingTop: Platform.OS === 'ios' ? 5 : 3,
           }}>
-          {!!user?.imageUrl ? (
+          {user?.imageUrl ? (
             <Image source={{uri: user?.imageUrl}} style={styles.avatar} />
           ) : (
             <Text
@@ -100,7 +100,7 @@ const HomeFeed = ({navigation}: Props) => {
                 paddingTop:
                   Platform.OS === 'ios' ? 3 : Platform.OS === 'android' ? 0 : 0,
               }}>
-              {!!user?.name ? getNameInitials(user?.name) : ''}
+              {user?.name ? getNameInitials(user?.name) : ''}
             </Text>
           )}
         </TouchableOpacity>
@@ -137,7 +137,7 @@ const HomeFeed = ({navigation}: Props) => {
 
     let res = await dispatch(initAPI(payload) as any);
 
-    if (!!res) {
+    if (res) {
       setCommunityId(res?.community?.id);
       setAccessToken(res?.accessToken);
       await dispatch(getMemberState() as any);
@@ -179,7 +179,7 @@ const HomeFeed = ({navigation}: Props) => {
       const isPermissionEnabled = await requestUserPermission();
       if (isPermissionEnabled) {
         let fcmToken = await fetchFCMToken();
-        if (!!fcmToken) {
+        if (fcmToken) {
           setFCMToken(fcmToken);
         }
       }
@@ -231,7 +231,7 @@ const HomeFeed = ({navigation}: Props) => {
   }, [FCMToken, accessToken]);
 
   useEffect(() => {
-    if (!!user) {
+    if (user) {
       setOptions();
     }
   }, [user]);

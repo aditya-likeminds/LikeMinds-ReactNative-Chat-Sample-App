@@ -36,7 +36,7 @@ export const PeopleWhoReactedDefault = ({
                 <View>
                   <Image
                     source={
-                      !!val?.member?.image_url
+                      val?.member?.image_url
                         ? {uri: val?.member?.image_url}
                         : require('../../assets/images/default_pic.png')
                     }
@@ -81,7 +81,7 @@ export const PeopleWhoReacted = ({
                 <View>
                   <Image
                     source={
-                      !!val?.image_url
+                      val?.image_url
                         ? {uri: val?.image_url}
                         : require('../../assets/images/default_pic.png')
                     }
@@ -143,13 +143,13 @@ export default function MyTabs({
   );
   const [state, setState] = useState({
     index: index >= 0 && selectedReaction ? index + 1 : 0,
-    routes: [{key: 'all', title: `All `, val: defaultReactionArr}],
+    routes: [{key: 'all', title: 'All ', val: defaultReactionArr}],
   });
 
   useLayoutEffect(() => {
     let initialState = {
       index: 0,
-      routes: [{key: 'all', title: `All `, val: defaultReactionArr}],
+      routes: [{key: 'all', title: 'All ', val: defaultReactionArr}],
     };
     if (reactionArr.length > 0) {
       for (let i = 0; i < reactionArr.length; i++) {

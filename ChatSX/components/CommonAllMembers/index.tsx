@@ -53,7 +53,7 @@ const CommonAllMembers = ({navigation, chatroomID, isDM, showList}: any) => {
               style={styles.backBtn}
             />
           </TouchableOpacity>
-          {!(Object.keys(!!participants ? participants : 0).length === 0) ? (
+          {!(Object.keys(participants ? participants : 0).length === 0) ? (
             <View style={styles.chatRoomInfo}>
               {isDM ? (
                 <View>
@@ -166,7 +166,7 @@ const CommonAllMembers = ({navigation, chatroomID, isDM, showList}: any) => {
 
   //to update header when we have API data, initially header will be printed but it's details that comes from API will not be shown as API is async call.
   useEffect(() => {
-    if (!!isSearch) {
+    if (isSearch) {
       setSearchHeader();
     } else {
       setInitialHeader();
@@ -175,15 +175,15 @@ const CommonAllMembers = ({navigation, chatroomID, isDM, showList}: any) => {
 
   // when we type something to search, this useEffect will update search Header with that searched letter.
   useEffect(() => {
-    if (!!isSearch) {
+    if (isSearch) {
       setSearchHeader();
     }
   }, [search]);
 
   // debouncing logic for search API call.
   useEffect(() => {
-    if (!!isSearch) {
-      if (!!!search) {
+    if (isSearch) {
+      if (!search) {
         setSearchedParticipants([]);
         setSearchPage(1);
       } else {
@@ -194,8 +194,8 @@ const CommonAllMembers = ({navigation, chatroomID, isDM, showList}: any) => {
 
     //debouncing logic
     const delay = setTimeout(() => {
-      if (!!isSearch) {
-        if (!!search) {
+      if (isSearch) {
+        if (search) {
           searchParticipants();
         }
       }
@@ -206,14 +206,14 @@ const CommonAllMembers = ({navigation, chatroomID, isDM, showList}: any) => {
 
   // to update count of selected participants on header
   useEffect(() => {
-    if (!isSearch && !!!isDM) {
+    if (!isSearch && !isDM) {
       setInitialHeader();
     }
   }, [selectedParticipants]);
 
   // for changing header when we search and when we don't search.
   useEffect(() => {
-    if (!!isSearch) {
+    if (isSearch) {
       setSearchHeader();
     } else {
       setInitialHeader();
@@ -365,7 +365,7 @@ const CommonAllMembers = ({navigation, chatroomID, isDM, showList}: any) => {
     if (res?.members.length === 0) {
       setIsStopPagination(true);
     }
-    if (!!res) {
+    if (res) {
       if (isSearch) {
         setSearchedParticipants((searchedParticipants: any) => [
           ...searchedParticipants,
@@ -419,7 +419,7 @@ const CommonAllMembers = ({navigation, chatroomID, isDM, showList}: any) => {
       });
     } else {
       let clickedChatroomID = res?.chatroomId;
-      if (!!clickedChatroomID) {
+      if (clickedChatroomID) {
         navigation.navigate(CHATROOM, {chatroomID: clickedChatroomID});
       } else {
         if (res?.isRequestDmLimitExceeded === false) {
@@ -435,7 +435,7 @@ const CommonAllMembers = ({navigation, chatroomID, isDM, showList}: any) => {
             });
           } else {
             let createdChatroomID = response?.chatroom?.id;
-            if (!!createdChatroomID) {
+            if (createdChatroomID) {
               navigation.navigate(CHATROOM, {
                 chatroomID: createdChatroomID,
               });
@@ -493,7 +493,7 @@ const CommonAllMembers = ({navigation, chatroomID, isDM, showList}: any) => {
               <View>
                 <Image
                   source={
-                    !!item?.imageUrl
+                    item?.imageUrl
                       ? {uri: item?.imageUrl}
                       : require('../../assets/images/default_pic.png')
                   }
@@ -512,7 +512,7 @@ const CommonAllMembers = ({navigation, chatroomID, isDM, showList}: any) => {
               <View style={styles.infoContainer}>
                 <Text style={styles.title} numberOfLines={1}>
                   {item?.name}
-                  {!!item?.customTitle ? (
+                  {item?.customTitle ? (
                     <Text
                       style={
                         styles.messageCustomTitle

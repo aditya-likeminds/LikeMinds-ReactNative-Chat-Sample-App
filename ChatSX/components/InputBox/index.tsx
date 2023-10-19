@@ -185,7 +185,7 @@ const InputBox = ({
       let convertedText = convertToMentionValues(
         `${editConversation?.answer} `, // to put extra space after a message whwn we want to edit a message
         ({URLwithID, name}) => {
-          if (!!!URLwithID) {
+          if (!URLwithID) {
             return `@[${name}](${name})`;
           } else {
             return `@[${name}](${URLwithID})`;
@@ -217,7 +217,7 @@ const InputBox = ({
 
   // this method sets image and video to upload on FileUpload screen via redux.
   const handleImageAndVideoUpload = async (selectedImages: Asset[]) => {
-    if (!!selectedImages) {
+    if (selectedImages) {
       if (isUploadScreen === false) {
         // to select images and videos from chatroom.
         await handleVideoThumbnail(selectedImages);
@@ -275,7 +275,9 @@ const InputBox = ({
       } else {
         let selectedImages: Asset[] | undefined = response.assets; // selectedImages can be anything images or videos or both
 
-        if (!selectedImages) return;
+        if (!selectedImages) {
+          return;
+        }
         for (let i = 0; i < selectedImages?.length; i++) {
           let fileSize = selectedImages[i]?.fileSize;
           if (Number(fileSize) >= MAX_FILE_SIZE) {
@@ -397,7 +399,9 @@ const InputBox = ({
       } else {
         let selectedImages: Asset[] | undefined = response.assets; // selectedImages would be images only
 
-        if (!selectedImages) return;
+        if (!selectedImages) {
+          return;
+        }
         if (selectedImages?.length > 0) {
           let fileSize = selectedImages[0]?.fileSize;
           if (Number(fileSize) >= MAX_FILE_SIZE) {
@@ -575,7 +579,7 @@ const InputBox = ({
     let conversationText = replaceMentionValues(conversation, ({id, name}) => {
       // example ID = `user_profile/8619d45e-9c4c-4730-af8e-4099fe3dcc4b`
       let PATH = extractPathfromRouteQuery(id);
-      if (!!!PATH) {
+      if (!PATH) {
         let newName = name.substring(1);
         return `<<${name}|route://${newName}>>`;
       } else {
@@ -773,7 +777,7 @@ const InputBox = ({
 
           let response = await dispatch(onConversationsCreate(payload) as any);
 
-          if (!!response) {
+          if (response) {
             await myClient?.replaceSavedConversation(response?.conversation);
           }
 
@@ -891,7 +895,7 @@ const InputBox = ({
       chatroomId: chatroomID,
       isSecret: isSecret,
     });
-    if (!!res) {
+    if (res) {
       isSecret
         ? setUserTaggingList([...userTaggingList, ...res?.chatroomParticipants])
         : setUserTaggingList([...userTaggingList, ...res?.communityMembers]);
@@ -1001,7 +1005,7 @@ const InputBox = ({
     let conversationText = replaceMentionValues(message, ({id, name}) => {
       // example ID = `user_profile/8619d45e-9c4c-4730-af8e-4099fe3dcc4b`
       let PATH = extractPathfromRouteQuery(id);
-      if (!!!PATH) {
+      if (!PATH) {
         return `<<${name}|route://${name}>>`;
       } else {
         return `<<${name}|route://${id}>>`;
@@ -1088,7 +1092,7 @@ const InputBox = ({
                       isReply && !isUploadScreen && !isUserTagging ? 10 : 20,
                     borderTopRightRadius:
                       isReply && !isUploadScreen && !isUserTagging ? 10 : 20,
-                    backgroundColor: !!isUploadScreen ? 'black' : 'white',
+                    backgroundColor: isUploadScreen ? 'black' : 'white',
                   },
                 ]
               : null
@@ -1098,7 +1102,7 @@ const InputBox = ({
               style={[
                 styles.taggableUsersBox,
                 {
-                  backgroundColor: !!isUploadScreen ? 'black' : 'white',
+                  backgroundColor: isUploadScreen ? 'black' : 'white',
                   height: userTaggingListHeight,
                 },
               ]}>
@@ -1126,7 +1130,7 @@ const InputBox = ({
                       style={styles.taggableUserView}>
                       <Image
                         source={
-                          !!imageUrl
+                          imageUrl
                             ? {uri: imageUrl}
                             : require('../../assets/images/default_pic.png')
                         }
@@ -1145,7 +1149,7 @@ const InputBox = ({
                           style={[
                             styles.title,
                             {
-                              color: !!isUploadScreen
+                              color: isUploadScreen
                                 ? STYLES.$COLORS.TERTIARY
                                 : STYLES.$COLORS.PRIMARY,
                             },
@@ -1153,12 +1157,12 @@ const InputBox = ({
                           numberOfLines={1}>
                           {item?.name}
                         </Text>
-                        {!!description ? (
+                        {description ? (
                           <Text
                             style={[
                               styles.subTitle,
                               {
-                                color: !!isUploadScreen
+                                color: isUploadScreen
                                   ? STYLES.$COLORS.TERTIARY
                                   : STYLES.$COLORS.PRIMARY,
                               },
@@ -1236,7 +1240,7 @@ const InputBox = ({
               styles.textInput,
               !(isEditable || isReply) ? styles.inputBoxWithShadow : null,
               {
-                backgroundColor: !!isUploadScreen
+                backgroundColor: isUploadScreen
                   ? STYLES.$BACKGROUND_COLORS.DARK
                   : STYLES.$BACKGROUND_COLORS.LIGHT,
               },
@@ -1256,7 +1260,7 @@ const InputBox = ({
               />
             </TouchableOpacity> */}
 
-            {!!isUploadScreen && !!!isDoc ? (
+            {!!isUploadScreen && !isDoc ? (
               <TouchableOpacity
                 style={styles.addMoreButton}
                 onPress={() => {
@@ -1283,7 +1287,7 @@ const InputBox = ({
             <View
               style={[
                 styles.inputParent,
-                !!isUploadScreen
+                isUploadScreen
                   ? {
                       marginHorizontal: 5,
                     }
@@ -1307,7 +1311,7 @@ const InputBox = ({
                   styles.input,
                   {height: Math.max(25, inputHeight)},
                   {
-                    color: !!isUploadScreen
+                    color: isUploadScreen
                       ? STYLES.$BACKGROUND_COLORS.LIGHT
                       : STYLES.$BACKGROUND_COLORS.DARK,
                   },

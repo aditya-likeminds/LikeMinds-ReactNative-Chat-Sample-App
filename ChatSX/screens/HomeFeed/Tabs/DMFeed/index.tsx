@@ -78,7 +78,7 @@ const DMFeed = ({navigation}: Props) => {
   const INITIAL_SYNC_PAGE = 1;
 
   async function fetchData() {
-    if (!!community?.id) {
+    if (community?.id) {
       let payload = {
         page: 1,
       };
@@ -86,7 +86,7 @@ const DMFeed = ({navigation}: Props) => {
         requestFrom: 'dm_feed_v2',
       });
       let response = apiRes?.data;
-      if (!!response) {
+      if (response) {
         let routeURL = response?.cta;
         const hasShowList = SHOW_LIST_REGEX.test(routeURL);
         if (hasShowList) {
@@ -107,7 +107,7 @@ const DMFeed = ({navigation}: Props) => {
       const isPermissionEnabled = await requestUserPermission();
       if (isPermissionEnabled) {
         let fcmToken = await fetchFCMToken();
-        if (!!fcmToken) {
+        if (fcmToken) {
           setFCMToken(fcmToken);
         }
       }
@@ -141,7 +141,9 @@ const DMFeed = ({navigation}: Props) => {
     const query = ref(db, `/community/${community?.id}`);
     return onValue(query, snapshot => {
       if (snapshot.exists()) {
-        if (!user?.sdkClientInfo?.community) return;
+        if (!user?.sdkClientInfo?.community) {
+          return;
+        }
         if (isFocused) {
           paginatedSyncAPI(INITIAL_SYNC_PAGE, user, true);
           setShimmerIsLoading(false);
@@ -155,7 +157,9 @@ const DMFeed = ({navigation}: Props) => {
 
   useEffect(() => {
     getAppConfig();
-    if (!user?.sdkClientInfo?.community) return;
+    if (!user?.sdkClientInfo?.community) {
+      return;
+    }
     paginatedSyncAPI(INITIAL_SYNC_PAGE, user, true);
     setShimmerIsLoading(false);
     setTimeout(() => {
@@ -177,7 +181,7 @@ const DMFeed = ({navigation}: Props) => {
     setIsLoading(true);
     setTimeout(async () => {
       const res = await updateData(newPage);
-      if (!!res) {
+      if (res) {
         setIsLoading(false);
       }
     }, 1500);

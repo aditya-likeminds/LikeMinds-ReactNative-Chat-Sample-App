@@ -54,10 +54,10 @@ const PollConversationUI = ({
           style={styles.selectedItem}
         />
       ) : null}
-      {!!(member?.id == user?.id) ? null : (
+      {member?.id == user?.id ? null : (
         <Text style={styles.messageInfo} numberOfLines={1}>
           {member?.name}
-          {!!member?.customTitle ? (
+          {member?.customTitle ? (
             <Text
               style={
                 styles.messageCustomTitle
@@ -171,7 +171,7 @@ const PollConversationUI = ({
                               }%`,
                               backgroundColor: hue
                                 ? `hsl(${hue}, 60%, 85%)`
-                                : `hsl(222, 60%, 85%)`,
+                                : 'hsl(222, 60%, 85%)',
                             },
                             styles.pollButtonBackground,
                             styles.pollButtonPadding,
@@ -196,7 +196,7 @@ const PollConversationUI = ({
                     style={[
                       styles.smallText,
                       {marginLeft: 5},
-                      !!(voteCount < 1) ? styles.greyColor : null,
+                      voteCount < 1 ? styles.greyColor : null,
                     ]}>{`${voteCount} ${
                     voteCount > 1 ? 'votes' : 'vote'
                   }`}</Text>
@@ -317,7 +317,7 @@ const PollConversationUI = ({
       {/* Poll timestamp and show edited text if edited */}
       <View style={styles.alignTime}>
         {isEdited ? (
-          <Text style={styles.messageDate}>{`Edited • `}</Text>
+          <Text style={styles.messageDate}>{'Edited • '}</Text>
         ) : null}
         <Text style={styles.messageDate}>{createdAt}</Text>
       </View>

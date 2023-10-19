@@ -1,6 +1,6 @@
 import {Alert, Share} from 'react-native';
 import {VALID_URI_REGEX} from '../constants/Regex';
-import { ShareChatroomRequest } from './models';
+import {ShareChatroomRequest} from './models';
 
 // this method generates URL for share
 export const shareChatroomURL = ({
