@@ -10,7 +10,7 @@
     "test": "jest",
     "eslint": "eslint .",
     "eslint:fix": "eslint --fix .",
-    "prettier": "prettier .",
+    "prettier": "prettier --check .",
     "prettier:fix": "prettier --write ."
   },
   "dependencies": {
